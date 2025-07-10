@@ -2,7 +2,12 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
+
+func main() {
+	testFI()
+}
 
 type TreeNode struct {
 	Val   int
@@ -10,7 +15,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func main() {
+func testMT() {
 	t1 := &TreeNode{Val: 5}
 	t2 := &TreeNode{Val: 4, Right: t1}
 	t3 := &TreeNode{Val: 3}
@@ -80,4 +85,65 @@ func nodeSum(node1, node2 *TreeNode) *TreeNode {
 		return &TreeNode{Val: node2.Val}
 	}
 	return nil
+}
+
+func testFI() {
+	tickets := [][]string{{"JFK", "a"}, {"JFK", "b"}, {"c", "JFK"}, {"b", "c"}}
+	res := findItinerary(tickets)
+	fmt.Println(res)
+}
+
+func findItinerary(tickets [][]string) []string {
+	var (
+		m   = map[string][]string{} // 邻接表：出发地 -> 目的地数组
+		res []string                // 最终结果
+	)
+
+	// 构建邻接表
+	for _, ticket := range tickets {
+		src, dst := ticket[0], ticket[1]
+		m[src] = append(m[src], dst)
+	}
+
+	// 保证目的地按字典序排序（先访问字典序小的）
+	for key := range m {
+		sort.Strings(m[key])
+	}
+
+	var dfs func(curr string)
+	dfs = func(curr string) {
+		// 当前出发地有未使用的票
+		for {
+			fmt.Println("current: ", curr)
+
+			if v, ok := m[curr]; !ok || len(v) == 0 {
+				fmt.Println("reached end...")
+				break
+			}
+
+			fmt.Println("next choices: ", m[curr])
+
+			// 每次都取字典序最小的目的地（第一个）
+			next := m[curr][0]
+
+			// 从邻接表中删除这张票（边）
+			m[curr] = m[curr][1:]
+
+			dfs(next)
+		}
+
+		// 回溯时记录路径（post-order，逆序）
+		fmt.Println("appending", curr)
+		res = append(res, curr)
+		fmt.Println("res after append: ", res)
+	}
+
+	dfs("JFK")
+
+	// 结果是逆序的，需要翻转
+	for i := 0; i < len(res)/2; i++ {
+		res[i], res[len(res)-1-i] = res[len(res)-1-i], res[i]
+	}
+
+	return res
 }
