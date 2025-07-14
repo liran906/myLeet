@@ -62,8 +62,10 @@ func wiggleMaxLength_(nums []int) int {
 		// 当前差值
 		diff := nums[i] - nums[i-1]
 
-		// 满足摆动条件：当前差值和前一个差值方向相反
-		if (diff > 0 && prevDiff <= 0) || (diff < 0 && prevDiff >= 0) {
+		// 考虑两个情况
+		// 1-初始 diff = 0，此时只要当前 diff 不为 0，那么就 +1 并更行 prevdiff
+		// 2-当前 diff 和 prevdiff 符号相反，那么也+1 并更新 prevdiff
+		if (prevDiff == 0 && diff != 0) || prevDiff*diff < 0 {
 			count++         // 成功“拐弯”，计数加一
 			prevDiff = diff // 更新前一个差值为当前差值
 		}
