@@ -1,5 +1,5 @@
 // https://leetcode.cn/problems/assign-cookies/description/
-// m
+// e
 
 package greedy
 
