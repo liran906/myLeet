@@ -13,7 +13,7 @@ func monotoneIncreasingDigits(n int) int {
 	for i := len(nstr) - 1; i > 0; i-- {
 		if nstr[i-1] > nstr[i] {
 			mark = i
-			nstr[i-1]-- // 比如 352 前一位减 1，当前位变 9，最后是 349
+			nstr[i-1]-- // 前一位减一，比如 352 前一位减 1，当前位变 9，最后是 349
 		}
 	}
 

@@ -3,6 +3,7 @@
 
 package dp
 
+// 和斐波那契数列一样
 func climbStairs(n int) int {
 	dp := make(map[int]int)
 	if n <= 2 {

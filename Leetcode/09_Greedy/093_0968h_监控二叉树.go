@@ -58,3 +58,35 @@ func minCameraCover(root *TreeNode) (count int) {
 
 	return
 }
+
+// 递归返回状态写法，稍精简一点
+func minCameraCover_(root *TreeNode) (count int) {
+	// 定义递归函数，后序遍历二叉树
+	var helper func(*TreeNode) int
+	helper = func(node *TreeNode) int {
+		if node == nil {
+			return 1 // 空节点视为被覆盖
+		}
+
+		// 后续遍历
+		left := helper(node.Left)
+		right := helper(node.Right)
+
+		// 核心逻辑
+		if left == 0 || right == 0 {
+			count++
+			node.Val = 2
+			// 子节点的状态可以不改，因为不会再遍历到了
+		} else if left == 2 || right == 2 {
+			node.Val = 1
+		}
+		return node.Val
+	}
+
+	// 根节点可能没有被覆盖，单独处理
+	if helper(root) == 0 {
+		count++
+	}
+
+	return
+}
