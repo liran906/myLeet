@@ -3,6 +3,7 @@
 
 package dp
 
+// 这个方法其实用了数学剪枝（小于 4 的情况）
 func integerBreak(n int) int {
 	// 当 n < 4 时，按照题目要求至少拆分成两个正整数
 	// 特殊处理：2 -> 1（1+1）、3 -> 2（1+2）
@@ -33,5 +34,17 @@ func integerBreak(n int) int {
 	}
 
 	// 题目要求的是将 n 拆分后最大乘积
+	return dp[n]
+}
+
+// 非剪枝的代码
+func integerBreak_(n int) int {
+	dp := make([]int, n+1)
+	dp[1] = 1
+	for i := 2; i <= n; i++ {
+		for j := 1; j <= i/2; j++ {
+			dp[i] = max(dp[i], max(dp[j], j)*max(dp[i-j], i-j))
+		}
+	}
 	return dp[n]
 }

@@ -6,7 +6,27 @@ import (
 )
 
 func main() {
-	testFI()
+	b := canPartition([]int{1, 5, 5, 11})
+	fmt.Println(b)
+}
+
+func canPartition(nums []int) bool {
+	sort.Ints(nums)
+	fmt.Println(nums)
+	l, r := 0, len(nums)-1
+	sum := 0
+	for l < r {
+		fmt.Printf("l=%d r=%d sum=%d\n", l, r, sum)
+		if sum < 0 {
+			sum += nums[l]
+			l++
+		} else {
+			sum -= nums[r]
+			r--
+		}
+	}
+	fmt.Println(sum)
+	return sum == 0
 }
 
 type TreeNode struct {
