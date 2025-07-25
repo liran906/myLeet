@@ -22,7 +22,10 @@ func canPartition_wrong(nums []int) bool {
 	return sum == 0
 }
 
+// 这题没有写注释，但因为和 102 题一样，所以看 102 吧
+
 // https://programmercarl.com/0416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86.html
+// 把这个看为一个 01 背包问题，weight 是 nums，value 也是 nums
 // 二维数组dp
 func canPartition_2d(nums []int) bool {
 	sum := 0
@@ -68,7 +71,7 @@ func canPartition(nums []int) bool {
 
 	target := sum / 2
 	var dp = make([]int, target+1)
-	for i := 1; i < len(nums); i++ {
+	for i := range nums {
 		for j := target; j >= 0; j-- {
 			if j >= nums[i] {
 				dp[j] = max(dp[j], dp[j-nums[i]]+nums[i])
