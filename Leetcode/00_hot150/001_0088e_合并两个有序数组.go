@@ -1,3 +1,5 @@
+// https://leetcode.cn/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
+
 package hot150
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
