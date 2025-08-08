@@ -18,7 +18,7 @@ func rob_1d(nums []int) int {
 }
 
 // 一维的可以压缩到常量纬，就跟二维压缩到一维一样的道理
-func rob(nums []int) int {
+func rob_(nums []int) int {
 	n := len(nums)
 	if n == 0 {
 		return 0
