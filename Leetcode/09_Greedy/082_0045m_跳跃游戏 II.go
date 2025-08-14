@@ -24,3 +24,22 @@ func jump(nums []int) (steps int) {
 	}
 	return
 }
+
+// 动态规划算法 On^2 没有贪心好
+func jump_dp(nums []int) (steps int) {
+	n := len(nums)
+	dp := make([]int, n)
+	// 初始化
+	for i := 1; i < n; i++ {
+		dp[i] = n
+	}
+
+	// dp
+	for i := 0; i < n; i++ {
+		maxLeap := min(i+nums[i], n-1) // 本次最大跳跃位置的索引
+		for j := i + 1; j <= maxLeap; j++ {
+			dp[j] = min(dp[j], dp[i]+1)
+		}
+	}
+	return dp[n-1]
+}
